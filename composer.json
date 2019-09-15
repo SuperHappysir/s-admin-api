@@ -31,6 +31,7 @@
     "swoft/crontab": "~2.0.0",
     "swoft/devtool": "~2.0.0",
     "happysir/distributed-lock": "dev-master",
+    "happysir/s-stdlib": "dev-master",
     "happysir/s-respository": "dev-master"
   },
   "require-dev": {
@@ -63,6 +64,10 @@
     {
       "type": "path",
       "url": "../distributed-lock"
+    },
+    {
+      "type": "path",
+      "url": "../s-stdlib"
     },
     {
       "type": "path",

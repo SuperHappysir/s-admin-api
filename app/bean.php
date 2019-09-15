@@ -9,7 +9,6 @@
  */
 
 use Swoft\Db\Database;
-use Swoft\Db\Pool;
 use Swoft\Http\Server\HttpServer;
 use Swoft\Http\Server\Swoole\RequestListener;
 use Swoft\Redis\RedisDb;
@@ -64,9 +63,9 @@ return [
     ],
     'db'                 => [
         'class'    => Database::class,
-        'dsn'      => 'mysql:dbname=test;host=127.0.0.1',
+        'dsn'      => 'mysql:dbname=s-admin;host=127.0.0.1',
         'username' => 'root',
-        'password' => 'swoft123456',
+        'password' => '123456',
     ],
     'migrationManager'   => [
         'migrationPath' => '@app/Migration',
@@ -77,7 +76,7 @@ return [
         'port'     => 6379,
         'database' => 0,
         'option'   => [
-            'prefix' => 'swoft:'
+            // 'prefix' => 'swoft:'
         ]
     ],
     'wsServer'           => [
