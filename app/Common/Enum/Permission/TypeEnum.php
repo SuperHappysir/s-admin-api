@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Enum\Permission;
+namespace App\Common\Enum\Permission;
 
 use Happysir\Lib\Concern\BaseEnum;
 

@@ -2,8 +2,7 @@
 
 namespace App\Model\Dao\Permission\Impl;
 
-use App\Enum\BoolEnum;
-use App\Enum\Permission\TypeEnum;
+use App\Common\Enum\Permission\TypeEnum;
 use App\Exception\AlreadyExistsException;
 use App\Exception\InvalidParamException;
 use App\Model\Dao\AbstractDao;
@@ -12,6 +11,7 @@ use App\Model\Entity\Rbac\ApiFieldPermissionResource;
 use App\Model\Entity\Rbac\ApiPermissionResource;
 use App\Model\Entity\Rbac\FrontPermissionResource;
 use App\Model\Vo\Permission\BackEndApiField;
+use Happysir\Lib\Enum\BoolEnum;
 use Swoft\Bean\Annotation\Mapping\Bean;
 use Swoft\Db\Eloquent\Builder;
 use Swoft\Db\Eloquent\Collection;

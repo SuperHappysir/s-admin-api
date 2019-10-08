@@ -2,8 +2,8 @@
 
 namespace App\Model\Dao\Role\Impl;
 
+use App\Common\Enum\Permission\TypeEnum;
 use App\Enum\BoolEnum;
-use App\Enum\Permission\TypeEnum;
 use App\Model\Dao\AbstractDao;
 use App\Model\Dao\Role\RoleResourceDaoInterface;
 use App\Model\Entity\Rbac\RoleResource;

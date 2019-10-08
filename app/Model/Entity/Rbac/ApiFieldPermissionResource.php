@@ -22,11 +22,11 @@ class ApiFieldPermissionResource extends Model
     /**
      * API 接口字段权限ID
      * @Id()
-     * @Column(name="api_field_per_id", prop="api_field_per_id")
+     * @Column(name="id", prop="id")
      *
      * @var int
      */
-    private $apiFieldPerId;
+    private $id;
 
     /**
      * API 权限ID
@@ -93,13 +93,13 @@ class ApiFieldPermissionResource extends Model
 
 
     /**
-     * @param int $apiFieldPerId
+     * @param int $id
      *
      * @return void
      */
-    public function setApiFieldPerId(int $apiFieldPerId): void
+    public function setId(int $id): void
     {
-        $this->apiFieldPerId = $apiFieldPerId;
+        $this->id = $id;
     }
 
     /**
@@ -175,9 +175,9 @@ class ApiFieldPermissionResource extends Model
     /**
      * @return int
      */
-    public function getApiFieldPerId(): ?int
+    public function getId(): ?int
     {
-        return $this->apiFieldPerId;
+        return $this->id;
     }
 
     /**

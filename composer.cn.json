@@ -14,13 +14,8 @@
     "ext-redis": "*",
     "ext-json": "*",
     "ext-mbstring": "*",
-    "swoft/view": "~2.0.0",
     "swoft/framework": "~2.0.0",
-    "swoft/http-server": "~2.0.0",
-    "swoft/redis": "~2.0.0",
-    "happysir/distributed-lock": "dev-master",
-    "happysir/s-stdlib": "dev-master",
-    "happysir/s-respository": "dev-master"
+    "swoft/http-server": "~2.0.0"
   },
   "require-dev": {
     "swoft/swoole-ide-helper": "dev-master",
@@ -36,6 +31,8 @@
   },
   "autoload-dev": {
     "psr-4": {
+      "AppTest\\Testing\\": "test/testing",
+      "AppTest\\Unit\\": "test/unit"
     }
   },
   "scripts": {
@@ -45,18 +42,10 @@
     "test": "./vendor/bin/phpunit -c phpunit.xml",
     "cs-fix": "./vendor/bin/php-cs-fixer fix $1"
   },
-  "repositories": [
-    {
-      "type": "path",
-      "url": "../distributed-lock"
-    },
-    {
-      "type": "path",
-      "url": "../s-stdlib"
-    },
-    {
-      "type": "path",
-      "url": "../s-respository"
+  "repositories": {
+    "packagist": {
+      "type": "composer",
+      "url": "https://mirrors.aliyun.com/composer/"
     }
-  ]
+  }
 }

@@ -2,7 +2,7 @@
 
 namespace App\Exception;
 
-use App\Enum\StatusCode;
+use App\Common\Enum\StatusCode;
 
 /**
  * 等待锁异常

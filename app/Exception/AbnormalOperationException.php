@@ -8,7 +8,7 @@
 
 namespace App\Exception;
 
-use App\Enum\StatusCode;
+use App\Common\Enum\StatusCode;
 
 /**
  * 异常操作异常

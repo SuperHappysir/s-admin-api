@@ -1,109 +1,47 @@
 <?php
-/**
- * This file is part of Swoft.
- *
- * @link     https://swoft.org
- * @document https://swoft.org/docs
- * @contact  group@swoft.org
- * @license  https://github.com/swoft-cloud/swoft/blob/master/LICENSE
- */
 
 use Swoft\Db\Database;
 use Swoft\Http\Server\HttpServer;
-use Swoft\Http\Server\Swoole\RequestListener;
 use Swoft\Redis\RedisDb;
-use Swoft\Server\SwooleEvent;
-use Swoft\Task\Swoole\FinishListener;
-use Swoft\Task\Swoole\TaskListener;
-use Swoft\WebSocket\Server\WebSocketServer;
 
 return [
-    'noticeHandler'      => [
-        'logFile' => '@runtime/logs/notice-%d{Y-m-d-H}.log',
-    ],
-    'applicationHandler' => [
-        'logFile' => '@runtime/logs/error-%d{Y-m-d}.log',
-    ],
-    'logger'             => [
-        'flushRequest' => true,
-        'enable'       => true,
+    'logger'     => [
+        'flushRequest' => false,
+        'enable'       => false,
         'json'         => false,
     ],
-    'httpServer'         => [
-        'class'    => HttpServer::class,
-        'port'     => 18306,
-        'listener' => [
-        ],
-        'process'  => [
-        ],
-        'on'       => [
-            // SwooleEvent::TASK   => bean(SyncTaskListener::class),  // Enable sync task
-            SwooleEvent::TASK   => bean(TaskListener::class),
-            // Enable task must task and finish event
-            SwooleEvent::FINISH => bean(FinishListener::class)
-        ],
+    'httpServer' => [
+        'class'   => HttpServer::class,
+        'port'    => 18306,
         /* @see HttpServer::$setting */
-        'setting'  => [
-            'task_worker_num'       => 12,
-            'task_enable_coroutine' => true,
-            'worker_num'            => 6
+        'setting' => [
+            'worker_num' => 8,
         ]
     ],
-    'httpDispatcher'     => [
-        // Add global http middleware
-        'middlewares'      => [
-            \App\Http\Middleware\FavIconMiddleware::class,
-            // \Swoft\Whoops\WhoopsMiddleware::class,
-            // Allow use @View tag
-            \Swoft\View\Middleware\ViewMiddleware::class,
-        ],
-        'afterMiddlewares' => [
-            \Swoft\Http\Server\Middleware\ValidatorMiddleware::class
-        ]
-    ],
-    'db'                 => [
+    'db'         => [
         'class'    => Database::class,
         'dsn'      => 'mysql:dbname=s-admin;host=127.0.0.1',
         'username' => 'root',
         'password' => '123456',
+        'charset'  => 'utf8mb4',
+        'options'  => [
+            PDO::ATTR_CASE => PDO::CASE_NATURAL,
+        ],
+        'config'   => [
+            'collation' => 'utf8mb4_unicode_ci',
+            'strict'    => false,
+            'timezone'  => '+8:00',
+            'modes'     => 'NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES',
+        ],
     ],
-    'migrationManager'   => [
-        'migrationPath' => '@app/Migration',
-    ],
-    'redis'              => [
+    'redis'      => [
         'class'    => RedisDb::class,
         'host'     => '127.0.0.1',
         'port'     => 6379,
         'database' => 0,
         'option'   => [
-            // 'prefix' => 'swoft:'
+            'prefix'     => 'swoft:',
+            'serializer' => Redis::SERIALIZER_NONE
         ]
     ],
-    'wsServer'           => [
-        'class'   => WebSocketServer::class,
-        'port'    => 18308,
-        'on'      => [
-            // Enable http handle
-            SwooleEvent::REQUEST => bean(RequestListener::class),
-        ],
-        'debug'   => 1,
-        // 'debug'   => env('SWOFT_DEBUG', 0),
-        /* @see WebSocketServer::$setting */
-        'setting' => [
-            'log_file' => alias('@runtime/swoole.log'),
-        ],
-    ],
-    'tcpServer'          => [
-        'port'  => 18309,
-        'debug' => 1,
-    ],
-    /** @see \Swoft\Tcp\Protocol */
-    'tcpServerProtocol'  => [
-        // 'type'            => \Swoft\Tcp\Packer\JsonPacker::TYPE,
-        'type' => \Swoft\Tcp\Packer\SimpleTokenPacker::TYPE,
-        // 'openLengthCheck' => true,
-    ],
-    'cliRouter'          => [
-        // 'disabledGroups' => ['demo', 'test'],
-    ]
 ];

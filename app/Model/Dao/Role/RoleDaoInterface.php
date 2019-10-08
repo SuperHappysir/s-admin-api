@@ -14,7 +14,7 @@ interface RoleDaoInterface extends DaoInterface
 {
     /**
      * @param string $roleName
-     * @return \Applications\Model\Entity\Mysql\Permission\RoleEntity|null
+     * @return \Applications\Model\Entity\Mysql\Rbac\Role|null
      * @throws \ReflectionException
      * @throws \Swoft\Bean\Exception\ContainerException
      * @throws \Swoft\Db\Exception\DbException

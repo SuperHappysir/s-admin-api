@@ -22,11 +22,11 @@ class FrontPermissionResource extends Model
     /**
      * 前端权限ID
      * @Id()
-     * @Column(name="front_per_id", prop="front_per_id")
+     * @Column(name="id", prop="id")
      *
      * @var int
      */
-    private $frontPerId;
+    private $id;
 
     /**
      * 名称
@@ -93,13 +93,13 @@ class FrontPermissionResource extends Model
 
 
     /**
-     * @param int $frontPerId
+     * @param int $id
      *
      * @return void
      */
-    public function setFrontPerId(int $frontPerId): void
+    public function setId(int $id): void
     {
-        $this->frontPerId = $frontPerId;
+        $this->id = $id;
     }
 
     /**
@@ -175,9 +175,9 @@ class FrontPermissionResource extends Model
     /**
      * @return int
      */
-    public function getFrontPerId(): ?int
+    public function getId(): ?int
     {
-        return $this->frontPerId;
+        return $this->id;
     }
 
     /**

@@ -9,7 +9,7 @@
 namespace App\Exception;
 
 
-use App\Enum\StatusCode;
+use App\Common\Enum\StatusCode;
 
 /**
  * 参数错误异常

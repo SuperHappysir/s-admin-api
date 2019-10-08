@@ -2,7 +2,7 @@
 
 namespace App\Exception\Handler;
 
-use App\Exception\ApplicationApplicationBaseException;
+use App\Exception\ApplicationBaseException;
 use Swoft\Error\Annotation\Mapping\ExceptionHandler;
 use Swoft\Http\Message\Response;
 use Swoft\Http\Server\Exception\Handler\AbstractHttpErrorHandler;
@@ -11,9 +11,9 @@ use Throwable;
 /**
  * Class ApiExceptionHandler
  *
- * @ExceptionHandler(ApplicationApplicationBaseException::class)
+ * @ExceptionHandler(ApplicationBaseException::class)
  */
-class ApplicationApplicationBaseExceptionHandler extends AbstractHttpErrorHandler
+class ApplicationBaseExceptionHandler extends AbstractHttpErrorHandler
 {
     /**
      * @param Throwable $except

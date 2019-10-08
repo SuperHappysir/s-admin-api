@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php declare(strict_types = 1);
 /**
  * This file is part of Swoft.
  *
@@ -32,32 +32,38 @@ class SqlListener implements EventHandlerInterface
      * @param EventInterface $event
      *
      */
-    public function handle(EventInterface $event): void
+    public function handle(EventInterface $event) : void
     {
         /** @var Connection $connection */
         $connection = $event->getTarget();
-
+        
         $querySql = $event->getParam(0);
         $bindings = $event->getParam(1);
-
+        
         $rawSql = $this->getRawSql($querySql, $bindings, $connection);
-
-       output()->info($rawSql);
+        
+        output()->info($rawSql);
     }
-
+    
     /**
-     * Returns the raw SQL by inserting parameter values into the corresponding placeholders in [[sql]].
-     * Note that the return value of this method should mainly be used for logging purpose.
-     * It is likely that this method returns an invalid SQL due to improper replacement of parameter placeholders.
+     * Returns the raw SQL by inserting parameter values into the corresponding
+     * placeholders in [[sql]]. Note that the return value of this method
+     * should mainly be used for logging purpose. It is likely that this method
+     * returns an invalid SQL due to improper replacement of parameter
+     * placeholders.
      *
-     * @param string     $sql
-     * @param array      $bindings
+     * @param string $sql
+     * @param array $bindings
      * @param Connection $connection
      *
-     * @return string the raw SQL with parameter values inserted into the corresponding placeholders in [[sql]].
+     * @return string the raw SQL with parameter values inserted into the
+     *                corresponding placeholders in [[sql]].
      */
-    public function getRawSql(string $sql, array $bindings, Connection $connection)
-    {
+    public function getRawSql(
+        string $sql,
+        array $bindings,
+        Connection $connection
+    ) : string {
         if (empty($bindings)) {
             return $sql;
         }
@@ -65,7 +71,7 @@ class SqlListener implements EventHandlerInterface
             if (is_int($name)) {
                 $name = '?';
             }
-
+            
             if (is_string($value) || is_array($value)) {
                 $param = $connection->getQueryGrammar()->quoteString($value);
             } elseif (is_bool($value)) {
@@ -75,10 +81,10 @@ class SqlListener implements EventHandlerInterface
             } else {
                 $param = (string)$value;
             }
-
+            
             $sql = StringHelper::replaceFirst($name, $param, $sql);
         }
-
+        
         return $sql;
     }
 }

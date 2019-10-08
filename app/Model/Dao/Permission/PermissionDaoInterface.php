@@ -2,9 +2,7 @@
 
 namespace App\Model\Dao\Permission;
 
-use App\Enum\BoolEnum;
-use App\Enum\Permission\TypeEnum;
-use App\Exception\AlreadyExistsException;
+use App\Common\Enum\Permission\TypeEnum;
 use App\Model\Dao\DaoInterface;
 use App\Model\Entity\Rbac\ApiFieldPermissionResource;
 use App\Model\Entity\Rbac\ApiPermissionResource;
@@ -26,7 +24,8 @@ interface PermissionDaoInterface extends DaoInterface
      * @throws \Swoft\Bean\Exception\ContainerException
      * @throws \Swoft\Db\Exception\DbException
      */
-    public function deletedAllResource(int $type = TypeEnum::API_INTERFACE
+    public function deletedAllResource(
+        int $type = TypeEnum::API_INTERFACE
     ) : int;
     
     /**
@@ -37,7 +36,8 @@ interface PermissionDaoInterface extends DaoInterface
      * @throws \Swoft\Bean\Exception\ContainerException
      * @throws \Swoft\Db\Exception\DbException
      */
-    public function findOrCreateBackEndRoute(array $attr
+    public function findOrCreateBackEndRoute(
+        array $attr
     ) : ApiPermissionResource;
     
     /**
@@ -103,7 +103,7 @@ interface PermissionDaoInterface extends DaoInterface
     /**
      * 提供指定的权限id，获取其中启用的权限（过滤失效权限id）
      *
-     * @param int $type
+     * @param int   $type
      * @param array $columns
      * @return \Swoft\Db\Eloquent\Collection
      * @throws \App\Exception\InvalidParamException

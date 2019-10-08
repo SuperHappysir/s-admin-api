@@ -1,5 +1,5 @@
 <?php
-namespace App\Enum;
+namespace App\Common\Enum;
 
 use Happysir\Lib\Concern\BaseEnum;
 

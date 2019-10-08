@@ -2,7 +2,7 @@
 
 namespace App\Model\Vo\Permission;
 
-use Happysir\Lib\Concern\Fluent;
+use Swoft\Stdlib\Fluent;
 
 /**
  * Class BackEndApiField

@@ -2,7 +2,7 @@
 
 namespace App\Model\Dao\Role;
 
-use App\Enum\Permission\TypeEnum;
+use App\Common\Enum\Permission\TypeEnum;
 use App\Model\Dao\DaoInterface;
 use Swoft\Db\Eloquent\Collection;
 
