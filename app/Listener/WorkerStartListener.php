@@ -26,9 +26,9 @@ class WorkerStartListener implements EventHandlerInterface
      */
     public function handle(EventInterface $event) : void
     {
-        if ($event->workerId === 1) {
-            vdump($event);
+        if ($event->workerId === 1 && env('AUTO_GEN_API_ROUT_PERM') === true) {
             RouteResourceLogic::instance()->updateApiRouteResource();
+            output()->info('生成api路由权限成功');
         }
     }
 }

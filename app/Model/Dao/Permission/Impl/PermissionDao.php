@@ -7,9 +7,9 @@ use App\Exception\AlreadyExistsException;
 use App\Exception\InvalidParamException;
 use App\Model\Dao\AbstractDao;
 use App\Model\Dao\Permission\PermissionDaoInterface;
-use App\Model\Entity\Rbac\ApiFieldPermissionResource;
-use App\Model\Entity\Rbac\ApiPermissionResource;
-use App\Model\Entity\Rbac\FrontPermissionResource;
+use App\Model\Entity\Rbac\ApiFieldResourceEntity;
+use App\Model\Entity\Rbac\ApiResourceEntity;
+use App\Model\Entity\Rbac\FrontResourceEntity;
 use App\Model\Vo\Permission\BackEndApiField;
 use Happysir\Lib\Enum\BoolEnum;
 use Swoft\Bean\Annotation\Mapping\Bean;
@@ -24,7 +24,7 @@ class PermissionDao extends AbstractDao implements PermissionDaoInterface
 {
     public function model() : string
     {
-        return ApiPermissionResource::class;
+        return ApiResourceEntity::class;
     }
     
     /**
@@ -48,7 +48,7 @@ class PermissionDao extends AbstractDao implements PermissionDaoInterface
     
     /**
      * @param array $attr
-     * @return \App\Model\Entity\Rbac\ApiPermissionResource
+     * @return \App\Model\Entity\Rbac\ApiResourceEntity
      * @throws \App\Exception\InvalidParamException
      * @throws \ReflectionException
      * @throws \Swoft\Bean\Exception\ContainerException
@@ -56,15 +56,15 @@ class PermissionDao extends AbstractDao implements PermissionDaoInterface
      */
     public function findOrCreateBackEndRoute(
         array $attr
-    ) : ApiPermissionResource {
+    ) : ApiResourceEntity {
         if (!$attr) {
             throw new InvalidParamException();
         }
-        /** @var ApiPermissionResource $entity */
-        $entity = ApiPermissionResource::firstOrNew(
+        /** @var ApiResourceEntity $entity */
+        $entity = ApiResourceEntity::firstOrNew(
             [
                 'request_method' => $attr['method'],
-                'api_url'        => $attr['path']
+                'uri'        => $attr['path']
             ]
         );
         $entity->fill(
@@ -216,15 +216,15 @@ class PermissionDao extends AbstractDao implements PermissionDaoInterface
             return new Collection();
         }
         
-        return ApiPermissionResource::query()
-                                    ->whereIn('id', $ids)
-                                    ->get($columns);
+        return ApiResourceEntity::query()
+                                ->whereIn('id', $ids)
+                                ->get($columns);
     }
     
     /**
      * @param int                                      $apiPerId
      * @param \App\Model\Vo\Permission\BackEndApiField $dto
-     * @return \App\Model\Entity\Rbac\ApiFieldPermissionResource
+     * @return \App\Model\Entity\Rbac\ApiFieldResourceEntity
      * @throws \App\Exception\AlreadyExistsException
      * @throws \ReflectionException
      * @throws \Swoft\Bean\Exception\ContainerException
@@ -233,11 +233,11 @@ class PermissionDao extends AbstractDao implements PermissionDaoInterface
     public function createBackEndApiField(
         int $apiPerId,
         BackEndApiField $dto
-    ) : ApiFieldPermissionResource {
-        /** @var ApiFieldPermissionResource $entity */
-        $entity = ApiFieldPermissionResource::where('field_key', $dto->getFieldKey())
-                                            ->where('api_per_id', $apiPerId)
-                                            ->first();
+    ) : ApiFieldResourceEntity {
+        /** @var ApiFieldResourceEntity $entity */
+        $entity = ApiFieldResourceEntity::where('field_key', $dto->getFieldKey())
+                                        ->where('api_per_id', $apiPerId)
+                                        ->first();
         if ($entity) {
             if (!$entity->getIsDeleted()) {
                 throw new AlreadyExistsException(
@@ -254,7 +254,7 @@ class PermissionDao extends AbstractDao implements PermissionDaoInterface
             }
         }
         
-        $entity = ApiFieldPermissionResource::new($dto->toArray());
+        $entity = ApiFieldResourceEntity::new($dto->toArray());
         $entity->save();
         
         return $entity;
@@ -274,10 +274,10 @@ class PermissionDao extends AbstractDao implements PermissionDaoInterface
         array $apiPerIds,
         array $columns = ['*']
     ) : Collection {
-        return ApiFieldPermissionResource::query()
-                                         ->whereIn('api_per_id', $apiPerIds)
-                                         ->where('is_deleted', BoolEnum::FALSE)
-                                         ->get($columns);
+        return ApiFieldResourceEntity::query()
+                                     ->whereIn('api_per_id', $apiPerIds)
+                                     ->where('is_deleted', BoolEnum::FALSE)
+                                     ->get($columns);
     }
     
     /**
@@ -305,13 +305,13 @@ class PermissionDao extends AbstractDao implements PermissionDaoInterface
     {
         switch ($type) {
             case TypeEnum::API_INTERFACE:
-                $entityName = ApiPermissionResource::class;
+                $entityName = ApiResourceEntity::class;
                 break;
             case TypeEnum::API_INTERFACE_FIELD:
-                $entityName = ApiFieldPermissionResource::class;
+                $entityName = ApiFieldResourceEntity::class;
                 break;
             case TypeEnum::FRONT_END:
-                $entityName = FrontPermissionResource::class;
+                $entityName = FrontResourceEntity::class;
                 break;
             default:
                 throw new InvalidParamException();

@@ -10,60 +10,51 @@ use Swoft\Db\Eloquent\Model;
 
 
 /**
- * API路由权限表
- * Class ApiPermissionResource
+ * 角色资源关联表
+ * Class RoleResource
  *
  * @since 2.0
  *
- * @Entity(table="a_api_permission_resource")
+ * @Entity(table="rbac_role_resource")
  */
-class ApiPermissionResource extends Model
+class RoleResourceEntity extends Model
 {
     /**
-     * API 权限ID
+     * 关联关系ID
      * @Id()
-     * @Column(name="id", prop="id")
+     * @Column()
      *
      * @var int
      */
     private $id;
 
     /**
-     * 接口名称
+     * 角色ID
      *
-     * @Column(name="api_name", prop="api_name")
+     * @Column(name="role_id", prop="role_id")
      *
-     * @var string
+     * @var int
      */
-    private $apiName;
+    private $roleId;
 
     /**
-     * 请求名称  GET POST DELETE PUT
+     * 资源类型 1 前端 2接口 3接口字段
      *
-     * @Column(name="request_method", prop="request_method")
+     * @Column(name="resource_type", prop="resource_type")
      *
-     * @var string
+     * @var int
      */
-    private $requestMethod;
+    private $resourceType;
 
     /**
-     * 路径
+     * 资源ID(如：接口、菜单等，在同一类型下下唯一)
      *
-     * @Column(name="api_url", prop="api_url")
+     * @Column(name="resource_id", prop="resource_id")
      *
-     * @var string
+     * @var int
      */
-    private $apiUrl;
+    private $resourceId;
 
-    /**
-     * 扩展字段
-     *
-     * @Column()
-     *
-     * @var string
-     */
-    private $extra;
-    
     /**
      * 删除标识 0-未删除 1-已删除
      *
@@ -103,43 +94,33 @@ class ApiPermissionResource extends Model
     }
 
     /**
-     * @param string $apiName
+     * @param int $roleId
      *
      * @return void
      */
-    public function setApiName(string $apiName): void
+    public function setRoleId(int $roleId): void
     {
-        $this->apiName = $apiName;
+        $this->roleId = $roleId;
     }
 
     /**
-     * @param string $requestMethod
+     * @param int $resourceType
      *
      * @return void
      */
-    public function setRequestMethod(string $requestMethod): void
+    public function setResourceType(int $resourceType): void
     {
-        $this->requestMethod = $requestMethod;
+        $this->resourceType = $resourceType;
     }
 
     /**
-     * @param string $apiUrl
+     * @param int $resourceId
      *
      * @return void
      */
-    public function setApiUrl(string $apiUrl): void
+    public function setResourceId(int $resourceId): void
     {
-        $this->apiUrl = $apiUrl;
-    }
-
-    /**
-     * @param string $extra
-     *
-     * @return void
-     */
-    public function setExtra(string $extra): void
-    {
-        $this->extra = $extra;
+        $this->resourceId = $resourceId;
     }
 
     /**
@@ -181,35 +162,27 @@ class ApiPermissionResource extends Model
     }
 
     /**
-     * @return string
+     * @return int
      */
-    public function getApiName(): ?string
+    public function getRoleId(): ?int
     {
-        return $this->apiName;
+        return $this->roleId;
     }
 
     /**
-     * @return string
+     * @return int
      */
-    public function getRequestMethod(): ?string
+    public function getResourceType(): ?int
     {
-        return $this->requestMethod;
+        return $this->resourceType;
     }
 
     /**
-     * @return string
+     * @return int
      */
-    public function getApiUrl(): ?string
+    public function getResourceId(): ?int
     {
-        return $this->apiUrl;
-    }
-
-    /**
-     * @return string
-     */
-    public function getExtra(): ?string
-    {
-        return $this->extra;
+        return $this->resourceId;
     }
 
     /**

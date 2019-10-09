@@ -5,6 +5,9 @@ namespace App\Model\Logic\Permission\Resource;
 use App\Common\Concern\BeanStaticInstance;
 use App\Common\Util\Env;
 use App\Model\Dao\Permission\Impl\PermissionDao;
+use App\Model\Entity\Rbac\ApiResourceEntity;
+use App\Model\Vo\Permission\BackendRouteResource;
+use App\Model\Vo\Permission\BackendRouteResourceCollection;
 use Applications\Common\Register\PermissionResourceRegister;
 use Swoft\Bean\Annotation\Mapping\Bean;
 use Swoft\Bean\Annotation\Mapping\Inject;
@@ -25,6 +28,36 @@ class RouteResourceLogic
      * @var \App\Model\Dao\Permission\PermissionDaoInterface
      */
     protected $perDao;
+    
+    /**
+     * @return \App\Model\Vo\Permission\BackendRouteResourceCollection
+     * @throws \App\Exception\InvalidParamException
+     * @throws \ReflectionException
+     * @throws \Swoft\Bean\Exception\ContainerException
+     * @throws \Swoft\Db\Exception\DbException
+     */
+    public function getBackendRouteResource() : BackendRouteResourceCollection
+    {
+        // 已存在的所有后端权限
+        $allResource = $this->perDao->getRecordsByType();
+        $allResource = $allResource->sortBy(
+            static function (
+                ApiResourceEntity $apiPermissionEntity
+            ) {
+                return $apiPermissionEntity->getUri();
+            }
+        );
+        
+        $collection = BackendRouteResourceCollection::new();
+        /** @var ApiResourceEntity $apiPermissionEntity */
+        foreach ($allResource as $apiPermissionEntity) {
+            $collection->push(
+                BackendRouteResource::convertFrom($apiPermissionEntity)
+            );
+        }
+        
+        return $collection;
+    }
     
     /**
      * @return bool
@@ -61,9 +94,9 @@ class RouteResourceLogic
             $resourceIds[] = $entity->getId();
         }
         
+        // 本地协同开发时，会删除其他开发同事生成的权限,因此本地不删除
         $needDelIds = array_diff($allResourceIds, $resourceIds);
         if ($needDelIds && !Env::isDev()) {
-            // 本地协同开发时，会删除其他开发同事生成的权限,因此本地不删除
             $this->perDao->deleteResourceBy($needDelIds);
         }
         

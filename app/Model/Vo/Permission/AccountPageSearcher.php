@@ -2,10 +2,12 @@
 
 namespace App\Model\Vo\Permission;
 
+use Happysir\Lib\Annotation\Mapping\POJO;
 use Happysir\Respository\Concern\Searcher;
 
 /**
  * Class RolePageSearcher
+ * @POJO()
  */
 class AccountPageSearcher extends Searcher
 {

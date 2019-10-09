@@ -10,33 +10,60 @@ use Swoft\Db\Eloquent\Model;
 
 
 /**
- * 管理账户表
- * Class Account
+ * 前端权限控制表
+ * Class FrontPermissionResource
  *
  * @since 2.0
  *
- * @Entity(table="a_account")
+ * @Entity(table="rbac_front_resource")
  */
-class Account extends Model
+class FrontResourceEntity extends Model
 {
     /**
-     * 账户id
+     * 前端权限ID
      * @Id()
-     * @Column(name="account_id", prop="account_id")
+     * @Column(name="id", prop="id")
      *
      * @var int
      */
-    private $accountId;
+    private $id;
 
     /**
-     * 用户昵称
+     * 名称
+     *
+     * @Column(name="front_name", prop="front_name")
+     *
+     * @var string
+     */
+    private $frontName;
+
+    /**
+     * 授权标志/路径
+     *
+     * @Column(name="component_name", prop="component_name")
+     *
+     * @var string
+     */
+    private $componentName;
+
+    /**
+     * 0 ?? 1 ??
+     *
+     * @Column(name="front_type", prop="front_type")
+     *
+     * @var int
+     */
+    private $frontType;
+
+    /**
+     * 导航 1 按钮
      *
      * @Column()
      *
      * @var string
      */
-    private $nickname;
-
+    private $extra;
+    
     /**
      * 删除标识 0-未删除 1-已删除
      *
@@ -45,16 +72,7 @@ class Account extends Model
      * @var int
      */
     private $isDeleted;
-
-    /**
-     * 扩展字段
-     *
-     * @Column()
-     *
-     * @var string
-     */
-    private $extra;
-
+    
     /**
      * 数据创建时间
      *
@@ -63,7 +81,7 @@ class Account extends Model
      * @var string
      */
     private $createdAt;
-
+    
     /**
      * 更新时间
      *
@@ -75,33 +93,43 @@ class Account extends Model
 
 
     /**
-     * @param int $accountId
+     * @param int $id
      *
      * @return void
      */
-    public function setAccountId(int $accountId): void
+    public function setId(int $id): void
     {
-        $this->accountId = $accountId;
+        $this->id = $id;
     }
 
     /**
-     * @param string $nickname
+     * @param string $frontName
      *
      * @return void
      */
-    public function setNickname(string $nickname): void
+    public function setFrontName(string $frontName): void
     {
-        $this->nickname = $nickname;
+        $this->frontName = $frontName;
     }
 
     /**
-     * @param int $isDeleted
+     * @param string $componentName
      *
      * @return void
      */
-    public function setIsDeleted(int $isDeleted): void
+    public function setComponentName(string $componentName): void
     {
-        $this->isDeleted = $isDeleted;
+        $this->componentName = $componentName;
+    }
+
+    /**
+     * @param int $frontType
+     *
+     * @return void
+     */
+    public function setFrontType(int $frontType): void
+    {
+        $this->frontType = $frontType;
     }
 
     /**
@@ -112,6 +140,16 @@ class Account extends Model
     public function setExtra(string $extra): void
     {
         $this->extra = $extra;
+    }
+
+    /**
+     * @param int $isDeleted
+     *
+     * @return void
+     */
+    public function setIsDeleted(int $isDeleted): void
+    {
+        $this->isDeleted = $isDeleted;
     }
 
     /**
@@ -137,25 +175,33 @@ class Account extends Model
     /**
      * @return int
      */
-    public function getAccountId(): ?int
+    public function getId(): ?int
     {
-        return $this->accountId;
+        return $this->id;
     }
 
     /**
      * @return string
      */
-    public function getNickname(): ?string
+    public function getFrontName(): ?string
     {
-        return $this->nickname;
+        return $this->frontName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getComponentName(): ?string
+    {
+        return $this->componentName;
     }
 
     /**
      * @return int
      */
-    public function getIsDeleted(): ?int
+    public function getFrontType(): ?int
     {
-        return $this->isDeleted;
+        return $this->frontType;
     }
 
     /**
@@ -164,6 +210,14 @@ class Account extends Model
     public function getExtra(): ?string
     {
         return $this->extra;
+    }
+
+    /**
+     * @return int
+     */
+    public function getIsDeleted(): ?int
+    {
+        return $this->isDeleted;
     }
 
     /**

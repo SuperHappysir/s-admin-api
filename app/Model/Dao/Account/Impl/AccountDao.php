@@ -4,7 +4,7 @@ namespace App\Model\Dao\Account\Impl;
 
 use App\Model\Dao\AbstractDao;
 use App\Model\Dao\Account\AccountDaoInterface;
-use App\Model\Entity\Rbac\Account;
+use App\Model\Entity\Rbac\AccountEntity;
 use App\Model\Vo\Permission\AccountPageSearcher;
 use Happysir\Respository\Concern\Paginator;
 use Swoft\Bean\Annotation\Mapping\Bean;
@@ -19,7 +19,7 @@ class AccountDao extends AbstractDao implements AccountDaoInterface
      */
     public function model() : string
     {
-        return Account::class;
+        return AccountEntity::class;
     }
     
     /**

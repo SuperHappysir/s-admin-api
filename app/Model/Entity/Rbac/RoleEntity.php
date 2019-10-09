@@ -10,27 +10,18 @@ use Swoft\Db\Eloquent\Model;
 
 
 /**
- * 角色资源关联表
- * Class RoleResource
+ * 角色表
+ * Class Role
  *
  * @since 2.0
  *
- * @Entity(table="a_role_resource")
+ * @Entity(table="rbac_role")
  */
-class RoleResource extends Model
+class RoleEntity extends Model
 {
     /**
-     * 关联关系ID
+     * 角色id
      * @Id()
-     * @Column()
-     *
-     * @var int
-     */
-    private $id;
-
-    /**
-     * 角色ID
-     *
      * @Column(name="role_id", prop="role_id")
      *
      * @var int
@@ -38,23 +29,23 @@ class RoleResource extends Model
     private $roleId;
 
     /**
-     * 资源类型 1 前端 2接口 3接口字段
+     * 角色昵称
      *
-     * @Column(name="resource_type", prop="resource_type")
+     * @Column(name="role_name", prop="role_name")
      *
-     * @var int
+     * @var string
      */
-    private $resourceType;
+    private $roleName;
 
     /**
-     * 资源ID(如：接口、菜单等，在同一类型下下唯一)
+     * 角色描述
      *
-     * @Column(name="resource_id", prop="resource_id")
+     * @Column(name="role_describe", prop="role_describe")
      *
-     * @var int
+     * @var string
      */
-    private $resourceId;
-
+    private $roleDescribe;
+    
     /**
      * 删除标识 0-未删除 1-已删除
      *
@@ -84,16 +75,6 @@ class RoleResource extends Model
 
 
     /**
-     * @param int $id
-     *
-     * @return void
-     */
-    public function setId(int $id): void
-    {
-        $this->id = $id;
-    }
-
-    /**
      * @param int $roleId
      *
      * @return void
@@ -104,23 +85,23 @@ class RoleResource extends Model
     }
 
     /**
-     * @param int $resourceType
+     * @param string $roleName
      *
      * @return void
      */
-    public function setResourceType(int $resourceType): void
+    public function setRoleName(string $roleName): void
     {
-        $this->resourceType = $resourceType;
+        $this->roleName = $roleName;
     }
 
     /**
-     * @param int $resourceId
+     * @param string $roleDescribe
      *
      * @return void
      */
-    public function setResourceId(int $resourceId): void
+    public function setRoleDescribe(string $roleDescribe): void
     {
-        $this->resourceId = $resourceId;
+        $this->roleDescribe = $roleDescribe;
     }
 
     /**
@@ -156,33 +137,25 @@ class RoleResource extends Model
     /**
      * @return int
      */
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
-    /**
-     * @return int
-     */
     public function getRoleId(): ?int
     {
         return $this->roleId;
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getResourceType(): ?int
+    public function getRoleName(): ?string
     {
-        return $this->resourceType;
+        return $this->roleName;
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getResourceId(): ?int
+    public function getRoleDescribe(): ?string
     {
-        return $this->resourceId;
+        return $this->roleDescribe;
     }
 
     /**

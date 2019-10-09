@@ -2,15 +2,20 @@
 
 namespace App\Model\Vo\Permission;
 
-use Swoft\Stdlib\Fluent;
+use App\Model\Entity\Rbac\ApiResourceEntity;
+use Happysir\Lib\Annotation\Mapping\Filed;
+use Happysir\Lib\Annotation\Mapping\POJO;
+use Happysir\Lib\BasePOJO;
 
 /**
  * Class BackendRouteResource
+ * @POJO()
  */
-class BackendRouteResource extends Fluent
+class BackendRouteResource extends BasePOJO
 {
     /**
      * 权限ID
+     * @Filed(name="id",prop="id")
      *
      * @var int
      */
@@ -18,6 +23,7 @@ class BackendRouteResource extends Fluent
     
     /**
      * 接口名称
+     * @Filed(name="api_name",prop="api_name")
      *
      * @var string
      */
@@ -25,6 +31,7 @@ class BackendRouteResource extends Fluent
     
     /**
      * 请求名称
+     * @Filed(name="request_method",prop="request_method")
      *
      * @var string
      */
@@ -32,10 +39,11 @@ class BackendRouteResource extends Fluent
     
     /**
      * 路径
+     * @Filed(name="uri",prop="uri")
      *
      * @var string
      */
-    private $apiUrl = '';
+    private $uri = '';
     
     /**
      * getResourceId
@@ -96,16 +104,35 @@ class BackendRouteResource extends Fluent
      *
      * @return string
      */
-    public function getApiUrl() : string
+    public function getUri() : string
     {
-        return $this->apiUrl;
+        return $this->uri;
     }
     
     /**
-     * @param string $apiUrl
+     * @param string $uri
      */
-    public function setApiUrl(string $apiUrl) : void
+    public function setUri(string $uri) : void
     {
-        $this->apiUrl = $apiUrl;
+        $this->uri = $uri;
+    }
+    
+    /**
+     * @return \App\Model\Entity\Rbac\ApiResourceEntity
+     * @throws \Swoft\Db\Exception\DbException
+     */
+    public function convertToApiPermissionResourceEntity() : ApiResourceEntity
+    {
+        return ApiResourceEntity::new($this->toArray());
+    }
+    
+    /**
+     * @param \App\Model\Entity\Rbac\ApiResourceEntity $resourceEntity
+     * @return $this
+     * @throws \Swoft\Db\Exception\DbException
+     */
+    public static function convertFrom(ApiResourceEntity $resourceEntity) : self
+    {
+        return self::new($resourceEntity->toArray());
     }
 }

@@ -5,7 +5,7 @@ namespace App\Model\Dao\Role\Impl;
 use App\Enum\BoolEnum;
 use App\Model\Dao\AbstractDao;
 use App\Model\Dao\Role\RoleDaoInterface;
-use App\Model\Entity\Rbac\Role;
+use App\Model\Entity\Rbac\RoleEntity;
 use Swoft\Bean\Annotation\Mapping\Bean;
 
 /**
@@ -15,19 +15,19 @@ class RoleDao extends AbstractDao implements RoleDaoInterface
 {
     public function model() : string
     {
-        return Role::class;
+        return RoleEntity::class;
     }
     
     /**
      * @param string $roleName
-     * @return \App\Model\Entity\Rbac\Role|null
+     * @return \App\Model\Entity\Rbac\RoleEntity|null
      * @throws \ReflectionException
      * @throws \Swoft\Bean\Exception\ContainerException
      * @throws \Swoft\Db\Exception\DbException
      */
-    public function getRoleByName(string $roleName) : ?Role
+    public function getRoleByName(string $roleName) : ?RoleEntity
     {
-        /** @var Role $entity */
+        /** @var RoleEntity $entity */
         $entity = $this->eloquentBuilder()
                        ->where('role_name', $roleName)
                        ->first();

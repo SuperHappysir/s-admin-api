@@ -10,42 +10,33 @@ use Swoft\Db\Eloquent\Model;
 
 
 /**
- * 角色表
- * Class Role
+ * 管理账户表
+ * Class Account
  *
  * @since 2.0
  *
- * @Entity(table="a_role")
+ * @Entity(table="rbac_account")
  */
-class Role extends Model
+class AccountEntity extends Model
 {
     /**
-     * 角色id
+     * 账户id
      * @Id()
-     * @Column(name="role_id", prop="role_id")
+     * @Column(name="account_id", prop="account_id")
      *
      * @var int
      */
-    private $roleId;
+    private $accountId;
 
     /**
-     * 角色昵称
+     * 用户昵称
      *
-     * @Column(name="role_name", prop="role_name")
+     * @Column()
      *
      * @var string
      */
-    private $roleName;
+    private $nickname;
 
-    /**
-     * 角色描述
-     *
-     * @Column(name="role_describe", prop="role_describe")
-     *
-     * @var string
-     */
-    private $roleDescribe;
-    
     /**
      * 删除标识 0-未删除 1-已删除
      *
@@ -54,7 +45,16 @@ class Role extends Model
      * @var int
      */
     private $isDeleted;
-    
+
+    /**
+     * 扩展字段
+     *
+     * @Column()
+     *
+     * @var string
+     */
+    private $extra;
+
     /**
      * 数据创建时间
      *
@@ -63,7 +63,7 @@ class Role extends Model
      * @var string
      */
     private $createdAt;
-    
+
     /**
      * 更新时间
      *
@@ -75,33 +75,23 @@ class Role extends Model
 
 
     /**
-     * @param int $roleId
+     * @param int $accountId
      *
      * @return void
      */
-    public function setRoleId(int $roleId): void
+    public function setAccountId(int $accountId): void
     {
-        $this->roleId = $roleId;
+        $this->accountId = $accountId;
     }
 
     /**
-     * @param string $roleName
+     * @param string $nickname
      *
      * @return void
      */
-    public function setRoleName(string $roleName): void
+    public function setNickname(string $nickname): void
     {
-        $this->roleName = $roleName;
-    }
-
-    /**
-     * @param string $roleDescribe
-     *
-     * @return void
-     */
-    public function setRoleDescribe(string $roleDescribe): void
-    {
-        $this->roleDescribe = $roleDescribe;
+        $this->nickname = $nickname;
     }
 
     /**
@@ -112,6 +102,16 @@ class Role extends Model
     public function setIsDeleted(int $isDeleted): void
     {
         $this->isDeleted = $isDeleted;
+    }
+
+    /**
+     * @param string $extra
+     *
+     * @return void
+     */
+    public function setExtra(string $extra): void
+    {
+        $this->extra = $extra;
     }
 
     /**
@@ -137,25 +137,17 @@ class Role extends Model
     /**
      * @return int
      */
-    public function getRoleId(): ?int
+    public function getAccountId(): ?int
     {
-        return $this->roleId;
+        return $this->accountId;
     }
 
     /**
      * @return string
      */
-    public function getRoleName(): ?string
+    public function getNickname(): ?string
     {
-        return $this->roleName;
-    }
-
-    /**
-     * @return string
-     */
-    public function getRoleDescribe(): ?string
-    {
-        return $this->roleDescribe;
+        return $this->nickname;
     }
 
     /**
@@ -164,6 +156,14 @@ class Role extends Model
     public function getIsDeleted(): ?int
     {
         return $this->isDeleted;
+    }
+
+    /**
+     * @return string
+     */
+    public function getExtra(): ?string
+    {
+        return $this->extra;
     }
 
     /**

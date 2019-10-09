@@ -10,17 +10,17 @@ use Swoft\Db\Eloquent\Model;
 
 
 /**
- * 前端权限控制表
- * Class FrontPermissionResource
+ * API 字段权限表
+ * Class ApiFieldPermissionResource
  *
  * @since 2.0
  *
- * @Entity(table="a_front_permission_resource")
+ * @Entity(table="rbac_api_field_resource")
  */
-class FrontPermissionResource extends Model
+class ApiFieldResourceEntity extends Model
 {
     /**
-     * 前端权限ID
+     * API 接口字段权限ID
      * @Id()
      * @Column(name="id", prop="id")
      *
@@ -29,40 +29,40 @@ class FrontPermissionResource extends Model
     private $id;
 
     /**
-     * 名称
+     * API 权限ID
      *
-     * @Column(name="front_name", prop="front_name")
-     *
-     * @var string
-     */
-    private $frontName;
-
-    /**
-     * 授权标志/路径
-     *
-     * @Column(name="component_name", prop="component_name")
-     *
-     * @var string
-     */
-    private $componentName;
-
-    /**
-     * 0 ?? 1 ??
-     *
-     * @Column(name="front_type", prop="front_type")
+     * @Column(name="api_per_id", prop="api_per_id")
      *
      * @var int
      */
-    private $frontType;
+    private $apiPerId;
 
     /**
-     * 导航 1 按钮
+     * 字段key
      *
-     * @Column()
+     * @Column(name="field_key", prop="field_key")
      *
      * @var string
      */
-    private $extra;
+    private $fieldKey;
+
+    /**
+     * 字段名称
+     *
+     * @Column(name="field_name", prop="field_name")
+     *
+     * @var string
+     */
+    private $fieldName;
+
+    /**
+     * 字段描述
+     *
+     * @Column(name="field_desc", prop="field_desc")
+     *
+     * @var string
+     */
+    private $fieldDesc;
     
     /**
      * 删除标识 0-未删除 1-已删除
@@ -103,43 +103,43 @@ class FrontPermissionResource extends Model
     }
 
     /**
-     * @param string $frontName
+     * @param int $apiPerId
      *
      * @return void
      */
-    public function setFrontName(string $frontName): void
+    public function setApiPerId(int $apiPerId): void
     {
-        $this->frontName = $frontName;
+        $this->apiPerId = $apiPerId;
     }
 
     /**
-     * @param string $componentName
+     * @param string $fieldKey
      *
      * @return void
      */
-    public function setComponentName(string $componentName): void
+    public function setFieldKey(string $fieldKey): void
     {
-        $this->componentName = $componentName;
+        $this->fieldKey = $fieldKey;
     }
 
     /**
-     * @param int $frontType
+     * @param string $fieldName
      *
      * @return void
      */
-    public function setFrontType(int $frontType): void
+    public function setFieldName(string $fieldName): void
     {
-        $this->frontType = $frontType;
+        $this->fieldName = $fieldName;
     }
 
     /**
-     * @param string $extra
+     * @param string $fieldDesc
      *
      * @return void
      */
-    public function setExtra(string $extra): void
+    public function setFieldDesc(string $fieldDesc): void
     {
-        $this->extra = $extra;
+        $this->fieldDesc = $fieldDesc;
     }
 
     /**
@@ -181,35 +181,35 @@ class FrontPermissionResource extends Model
     }
 
     /**
-     * @return string
-     */
-    public function getFrontName(): ?string
-    {
-        return $this->frontName;
-    }
-
-    /**
-     * @return string
-     */
-    public function getComponentName(): ?string
-    {
-        return $this->componentName;
-    }
-
-    /**
      * @return int
      */
-    public function getFrontType(): ?int
+    public function getApiPerId(): ?int
     {
-        return $this->frontType;
+        return $this->apiPerId;
     }
 
     /**
      * @return string
      */
-    public function getExtra(): ?string
+    public function getFieldKey(): ?string
     {
-        return $this->extra;
+        return $this->fieldKey;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFieldName(): ?string
+    {
+        return $this->fieldName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFieldDesc(): ?string
+    {
+        return $this->fieldDesc;
     }
 
     /**

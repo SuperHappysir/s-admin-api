@@ -2,12 +2,14 @@
 
 namespace App\Model\Vo\Permission;
 
-use Swoft\Stdlib\Fluent;
+use Happysir\Lib\Annotation\Mapping\POJO;
+use Happysir\Lib\BasePOJO;
 
 /**
  * Class BackEndApiField
+ * @POJO()
  */
-class BackEndApiField extends Fluent
+class BackEndApiField extends BasePOJO
 {
     /**
      * 权限ID

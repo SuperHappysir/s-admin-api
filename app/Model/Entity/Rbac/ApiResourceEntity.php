@@ -1,5 +1,4 @@
-<?php declare(strict_types=1);
-
+<?php declare(strict_types = 1);
 
 namespace App\Model\Entity\Rbac;
 
@@ -8,61 +7,60 @@ use Swoft\Db\Annotation\Mapping\Entity;
 use Swoft\Db\Annotation\Mapping\Id;
 use Swoft\Db\Eloquent\Model;
 
-
 /**
- * API 字段权限表
- * Class ApiFieldPermissionResource
+ * API路由权限表
+ * Class ApiPermissionResource
  *
  * @since 2.0
  *
- * @Entity(table="a_api_field_permission_resource")
+ * @Entity(table="rbac_api_resource")
  */
-class ApiFieldPermissionResource extends Model
+class ApiResourceEntity extends Model
 {
     /**
-     * API 接口字段权限ID
+     * API 权限ID
      * @Id()
      * @Column(name="id", prop="id")
      *
      * @var int
      */
     private $id;
-
+    
     /**
-     * API 权限ID
+     * 接口名称
      *
-     * @Column(name="api_per_id", prop="api_per_id")
-     *
-     * @var int
-     */
-    private $apiPerId;
-
-    /**
-     * 字段key
-     *
-     * @Column(name="field_key", prop="field_key")
+     * @Column(name="api_name", prop="api_name")
      *
      * @var string
      */
-    private $fieldKey;
-
+    private $apiName;
+    
     /**
-     * 字段名称
+     * 请求名称  GET POST DELETE PUT
      *
-     * @Column(name="field_name", prop="field_name")
+     * @Column(name="request_method", prop="request_method")
      *
      * @var string
      */
-    private $fieldName;
-
+    private $requestMethod;
+    
     /**
-     * 字段描述
+     * 路径
      *
-     * @Column(name="field_desc", prop="field_desc")
+     * @Column(name="uri", prop="uri")
      *
      * @var string
      */
-    private $fieldDesc;
+    private $uri;
+    
+    /**
+     * 扩展字段
+     *
+     * @Column()
+     *
+     * @var string
+     */
+    private $extra;
     
     /**
      * 删除标识 0-未删除 1-已删除
@@ -90,150 +88,149 @@ class ApiFieldPermissionResource extends Model
      * @var string
      */
     private $updatedAt;
-
-
+    
     /**
      * @param int $id
      *
      * @return void
      */
-    public function setId(int $id): void
+    public function setId(int $id) : void
     {
         $this->id = $id;
     }
-
+    
     /**
-     * @param int $apiPerId
+     * @param string $apiName
      *
      * @return void
      */
-    public function setApiPerId(int $apiPerId): void
+    public function setApiName(string $apiName) : void
     {
-        $this->apiPerId = $apiPerId;
+        $this->apiName = $apiName;
     }
-
+    
     /**
-     * @param string $fieldKey
+     * @param string $requestMethod
      *
      * @return void
      */
-    public function setFieldKey(string $fieldKey): void
+    public function setRequestMethod(string $requestMethod) : void
     {
-        $this->fieldKey = $fieldKey;
+        $this->requestMethod = $requestMethod;
     }
-
+    
     /**
-     * @param string $fieldName
+     * @param string $uri
      *
      * @return void
      */
-    public function setFieldName(string $fieldName): void
+    public function setUri(string $uri) : void
     {
-        $this->fieldName = $fieldName;
+        $this->uri = $uri;
     }
-
+    
     /**
-     * @param string $fieldDesc
+     * @param string $extra
      *
      * @return void
      */
-    public function setFieldDesc(string $fieldDesc): void
+    public function setExtra(string $extra) : void
     {
-        $this->fieldDesc = $fieldDesc;
+        $this->extra = $extra;
     }
-
+    
     /**
      * @param int $isDeleted
      *
      * @return void
      */
-    public function setIsDeleted(int $isDeleted): void
+    public function setIsDeleted(int $isDeleted) : void
     {
         $this->isDeleted = $isDeleted;
     }
-
+    
     /**
      * @param string $createdAt
      *
      * @return void
      */
-    public function setCreatedAt(string $createdAt): void
+    public function setCreatedAt(string $createdAt) : void
     {
         $this->createdAt = $createdAt;
     }
-
+    
     /**
      * @param string $updatedAt
      *
      * @return void
      */
-    public function setUpdatedAt(string $updatedAt): void
+    public function setUpdatedAt(string $updatedAt) : void
     {
         $this->updatedAt = $updatedAt;
     }
-
+    
     /**
      * @return int
      */
-    public function getId(): ?int
+    public function getId() : ?int
     {
         return $this->id;
     }
-
+    
+    /**
+     * @return string
+     */
+    public function getApiName() : ?string
+    {
+        return $this->apiName;
+    }
+    
+    /**
+     * @return string
+     */
+    public function getRequestMethod() : ?string
+    {
+        return $this->requestMethod;
+    }
+    
+    /**
+     * @return string
+     */
+    public function getUri() : ?string
+    {
+        return $this->uri;
+    }
+    
+    /**
+     * @return string
+     */
+    public function getExtra() : ?string
+    {
+        return $this->extra;
+    }
+    
     /**
      * @return int
      */
-    public function getApiPerId(): ?int
-    {
-        return $this->apiPerId;
-    }
-
-    /**
-     * @return string
-     */
-    public function getFieldKey(): ?string
-    {
-        return $this->fieldKey;
-    }
-
-    /**
-     * @return string
-     */
-    public function getFieldName(): ?string
-    {
-        return $this->fieldName;
-    }
-
-    /**
-     * @return string
-     */
-    public function getFieldDesc(): ?string
-    {
-        return $this->fieldDesc;
-    }
-
-    /**
-     * @return int
-     */
-    public function getIsDeleted(): ?int
+    public function getIsDeleted() : ?int
     {
         return $this->isDeleted;
     }
-
+    
     /**
      * @return string
      */
-    public function getCreatedAt(): ?string
+    public function getCreatedAt() : ?string
     {
         return $this->createdAt;
     }
-
+    
     /**
      * @return string
      */
-    public function getUpdatedAt(): ?string
+    public function getUpdatedAt() : ?string
     {
         return $this->updatedAt;
     }
-
+    
 }

@@ -4,8 +4,8 @@ namespace App\Model\Dao\Permission;
 
 use App\Common\Enum\Permission\TypeEnum;
 use App\Model\Dao\DaoInterface;
-use App\Model\Entity\Rbac\ApiFieldPermissionResource;
-use App\Model\Entity\Rbac\ApiPermissionResource;
+use App\Model\Entity\Rbac\ApiFieldResourceEntity;
+use App\Model\Entity\Rbac\ApiResourceEntity;
 use App\Model\Vo\Permission\BackEndApiField;
 use Swoft\Db\Eloquent\Collection;
 
@@ -30,7 +30,7 @@ interface PermissionDaoInterface extends DaoInterface
     
     /**
      * @param array $attr
-     * @return \App\Model\Entity\Rbac\ApiPermissionResource
+     * @return \App\Model\Entity\Rbac\ApiResourceEntity
      * @throws \App\Exception\InvalidParamException
      * @throws \ReflectionException
      * @throws \Swoft\Bean\Exception\ContainerException
@@ -38,7 +38,7 @@ interface PermissionDaoInterface extends DaoInterface
      */
     public function findOrCreateBackEndRoute(
         array $attr
-    ) : ApiPermissionResource;
+    ) : ApiResourceEntity;
     
     /**
      * 启用指定后端路由
@@ -144,7 +144,7 @@ interface PermissionDaoInterface extends DaoInterface
     /**
      * @param int                                      $apiPerId
      * @param \App\Model\Vo\Permission\BackEndApiField $dto
-     * @return \App\Model\Entity\Rbac\ApiFieldPermissionResource
+     * @return \App\Model\Entity\Rbac\ApiFieldResourceEntity
      * @throws \App\Exception\AlreadyExistsException
      * @throws \ReflectionException
      * @throws \Swoft\Bean\Exception\ContainerException
@@ -153,5 +153,5 @@ interface PermissionDaoInterface extends DaoInterface
     public function createBackEndApiField(
         int $apiPerId,
         BackEndApiField $dto
-    ) : ApiFieldPermissionResource;
+    ) : ApiFieldResourceEntity;
 }

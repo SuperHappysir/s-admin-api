@@ -2,12 +2,14 @@
 
 namespace App\Model\Vo\Permission;
 
-use Swoft\Stdlib\Fluent;
+use Happysir\Lib\Annotation\Mapping\POJO;
+use Happysir\Lib\BasePOJO;
 
 /**
  * Class Role
+ * @POJO()
  */
-class Role extends Fluent
+class Role extends BasePOJO
 {
     /**
      * 角色昵称

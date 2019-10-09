@@ -15,9 +15,9 @@ use Swoft\Db\Eloquent\Model;
  *
  * @since 2.0
  *
- * @Entity(table="a_account_role")
+ * @Entity(table="rbac_account_role")
  */
-class AccountRole extends Model
+class AccountRoleEntity extends Model
 {
     /**
      * 自增ID

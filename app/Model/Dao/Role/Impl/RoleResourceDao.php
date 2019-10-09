@@ -6,7 +6,7 @@ use App\Common\Enum\Permission\TypeEnum;
 use App\Enum\BoolEnum;
 use App\Model\Dao\AbstractDao;
 use App\Model\Dao\Role\RoleResourceDaoInterface;
-use App\Model\Entity\Rbac\RoleResource;
+use App\Model\Entity\Rbac\RoleResourceEntity;
 use Swoft\Bean\Annotation\Mapping\Bean;
 use Swoft\Db\Eloquent\Collection;
 
@@ -17,7 +17,7 @@ class RoleResourceDao extends AbstractDao implements RoleResourceDaoInterface
 {
     public function model() : string
     {
-        return RoleResource::class;
+        return RoleResourceEntity::class;
     }
     
     /**

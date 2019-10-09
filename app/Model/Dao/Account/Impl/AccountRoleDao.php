@@ -6,7 +6,7 @@ use App\Enum\BoolEnum;
 use App\Exception\InvalidParamException;
 use App\Model\Dao\AbstractDao;
 use App\Model\Dao\Account\AccountRoleDaoInterface;
-use App\Model\Entity\Rbac\AccountRole;
+use App\Model\Entity\Rbac\AccountRoleEntity;
 use Swoft\Bean\Annotation\Mapping\Bean;
 use Swoft\Db\Eloquent\Collection;
 
@@ -20,7 +20,7 @@ class AccountRoleDao extends AbstractDao implements AccountRoleDaoInterface
      */
     public function model() : string
     {
-        return AccountRole::class;
+        return AccountRoleEntity::class;
     }
     
     /**
