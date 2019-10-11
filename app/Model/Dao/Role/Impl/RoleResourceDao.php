@@ -6,7 +6,7 @@ use App\Common\Enum\Permission\TypeEnum;
 use App\Enum\BoolEnum;
 use App\Model\Dao\AbstractDao;
 use App\Model\Dao\Role\RoleResourceDaoInterface;
-use App\Model\Entity\Rbac\RoleResourceEntity;
+use App\Model\Entity\Permission\RoleResourceEntity;
 use Swoft\Bean\Annotation\Mapping\Bean;
 use Swoft\Db\Eloquent\Collection;
 

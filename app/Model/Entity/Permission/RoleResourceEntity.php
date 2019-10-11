@@ -1,7 +1,7 @@
 <?php declare(strict_types=1);
 
 
-namespace App\Model\Entity\Rbac;
+namespace App\Model\Entity\Permission;
 
 use Swoft\Db\Annotation\Mapping\Column;
 use Swoft\Db\Annotation\Mapping\Entity;
@@ -10,60 +10,51 @@ use Swoft\Db\Eloquent\Model;
 
 
 /**
- * 前端权限控制表
- * Class FrontPermissionResource
+ * 角色资源关联表
+ * Class RoleResource
  *
  * @since 2.0
  *
- * @Entity(table="rbac_front_resource")
+ * @Entity(table="rbac_role_resource")
  */
-class FrontResourceEntity extends Model
+class RoleResourceEntity extends Model
 {
     /**
-     * 前端权限ID
+     * 关联关系ID
      * @Id()
-     * @Column(name="id", prop="id")
+     * @Column()
      *
      * @var int
      */
     private $id;
 
     /**
-     * 名称
+     * 角色ID
      *
-     * @Column(name="front_name", prop="front_name")
-     *
-     * @var string
-     */
-    private $frontName;
-
-    /**
-     * 授权标志/路径
-     *
-     * @Column(name="component_name", prop="component_name")
-     *
-     * @var string
-     */
-    private $componentName;
-
-    /**
-     * 0 ?? 1 ??
-     *
-     * @Column(name="front_type", prop="front_type")
+     * @Column(name="role_id", prop="role_id")
      *
      * @var int
      */
-    private $frontType;
+    private $roleId;
 
     /**
-     * 导航 1 按钮
+     * 资源类型 1 前端 2接口 3接口字段
      *
-     * @Column()
+     * @Column(name="resource_type", prop="resource_type")
      *
-     * @var string
+     * @var int
      */
-    private $extra;
-    
+    private $resourceType;
+
+    /**
+     * 资源ID(如：接口、菜单等，在同一类型下下唯一)
+     *
+     * @Column(name="resource_id", prop="resource_id")
+     *
+     * @var int
+     */
+    private $resourceId;
+
     /**
      * 删除标识 0-未删除 1-已删除
      *
@@ -103,43 +94,33 @@ class FrontResourceEntity extends Model
     }
 
     /**
-     * @param string $frontName
+     * @param int $roleId
      *
      * @return void
      */
-    public function setFrontName(string $frontName): void
+    public function setRoleId(int $roleId): void
     {
-        $this->frontName = $frontName;
+        $this->roleId = $roleId;
     }
 
     /**
-     * @param string $componentName
+     * @param int $resourceType
      *
      * @return void
      */
-    public function setComponentName(string $componentName): void
+    public function setResourceType(int $resourceType): void
     {
-        $this->componentName = $componentName;
+        $this->resourceType = $resourceType;
     }
 
     /**
-     * @param int $frontType
+     * @param int $resourceId
      *
      * @return void
      */
-    public function setFrontType(int $frontType): void
+    public function setResourceId(int $resourceId): void
     {
-        $this->frontType = $frontType;
-    }
-
-    /**
-     * @param string $extra
-     *
-     * @return void
-     */
-    public function setExtra(string $extra): void
-    {
-        $this->extra = $extra;
+        $this->resourceId = $resourceId;
     }
 
     /**
@@ -181,35 +162,27 @@ class FrontResourceEntity extends Model
     }
 
     /**
-     * @return string
+     * @return int
      */
-    public function getFrontName(): ?string
+    public function getRoleId(): ?int
     {
-        return $this->frontName;
-    }
-
-    /**
-     * @return string
-     */
-    public function getComponentName(): ?string
-    {
-        return $this->componentName;
+        return $this->roleId;
     }
 
     /**
      * @return int
      */
-    public function getFrontType(): ?int
+    public function getResourceType(): ?int
     {
-        return $this->frontType;
+        return $this->resourceType;
     }
 
     /**
-     * @return string
+     * @return int
      */
-    public function getExtra(): ?string
+    public function getResourceId(): ?int
     {
-        return $this->extra;
+        return $this->resourceId;
     }
 
     /**

@@ -4,15 +4,17 @@ namespace App\Model\Dao\Permission;
 
 use App\Common\Enum\Permission\TypeEnum;
 use App\Model\Dao\DaoInterface;
-use App\Model\Entity\Rbac\ApiFieldResourceEntity;
-use App\Model\Entity\Rbac\ApiResourceEntity;
-use App\Model\Vo\Permission\BackEndApiField;
+use App\Model\Entity\Permission\ApiFieldResourceEntity;
+use App\Model\Entity\Permission\ApiResourceEntity;
+use App\Model\Entity\Permission\FrontResourceEntity;
+use App\Model\Vo\Permission\BackEndApiFieldResource;
+use App\Model\Vo\Permission\FrontResource;
 use Swoft\Db\Eloquent\Collection;
 
 /**
- * Interface PermissionDaoInterface
+ * Interface ResourceDaoInterface
  */
-interface PermissionDaoInterface extends DaoInterface
+interface ResourceDaoInterface extends DaoInterface
 {
     /**
      * 删除全部权限
@@ -30,7 +32,7 @@ interface PermissionDaoInterface extends DaoInterface
     
     /**
      * @param array $attr
-     * @return \App\Model\Entity\Rbac\ApiResourceEntity
+     * @return \App\Model\Entity\Permission\ApiResourceEntity
      * @throws \App\Exception\InvalidParamException
      * @throws \ReflectionException
      * @throws \Swoft\Bean\Exception\ContainerException
@@ -142,9 +144,9 @@ interface PermissionDaoInterface extends DaoInterface
     ) : Collection;
     
     /**
-     * @param int                                      $apiPerId
-     * @param \App\Model\Vo\Permission\BackEndApiField $dto
-     * @return \App\Model\Entity\Rbac\ApiFieldResourceEntity
+     * @param int                                              $apiPerId
+     * @param \App\Model\Vo\Permission\BackEndApiFieldResource $dto
+     * @return \App\Model\Entity\Permission\ApiFieldResourceEntity
      * @throws \App\Exception\AlreadyExistsException
      * @throws \ReflectionException
      * @throws \Swoft\Bean\Exception\ContainerException
@@ -152,6 +154,40 @@ interface PermissionDaoInterface extends DaoInterface
      */
     public function createBackEndApiField(
         int $apiPerId,
-        BackEndApiField $dto
+        BackEndApiFieldResource $dto
     ) : ApiFieldResourceEntity;
+    
+    /**
+     * @param int                                              $resourceId
+     * @param \App\Model\Vo\Permission\BackEndApiFieldResource $dto
+     * @return \App\Model\Entity\Permission\ApiFieldResourceEntity
+     */
+    public function updateBackEndApiField(
+        int $resourceId,
+        BackEndApiFieldResource $dto
+    ) : ApiFieldResourceEntity;
+    
+    /**
+     * @param \App\Model\Vo\Permission\FrontResource $dto
+     * @return \App\Model\Entity\Permission\FrontResourceEntity
+     */
+    public function createOrUpdateFrontEndResource(
+        FrontResource $dto
+    ) : FrontResourceEntity;
+    
+    /**
+     * 更新前端权限
+     *
+     * @param int                                    $resourceId
+     * @param \App\Model\Vo\Permission\FrontResource $dto
+     * @return \App\Model\Entity\Permission\FrontResourceEntity
+     * @throws \App\Exception\NotFoundException
+     * @throws \ReflectionException
+     * @throws \Swoft\Bean\Exception\ContainerException
+     * @throws \Swoft\Db\Exception\DbException
+     */
+    public function updateFrontEndResource(
+        int $resourceId,
+        FrontResource $dto
+    ) : FrontResourceEntity;
 }

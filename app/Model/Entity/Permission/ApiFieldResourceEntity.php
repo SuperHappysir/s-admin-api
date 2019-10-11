@@ -1,7 +1,7 @@
 <?php declare(strict_types=1);
 
 
-namespace App\Model\Entity\Rbac;
+namespace App\Model\Entity\Permission;
 
 use Swoft\Db\Annotation\Mapping\Column;
 use Swoft\Db\Annotation\Mapping\Entity;

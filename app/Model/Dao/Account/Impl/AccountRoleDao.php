@@ -6,7 +6,7 @@ use App\Enum\BoolEnum;
 use App\Exception\InvalidParamException;
 use App\Model\Dao\AbstractDao;
 use App\Model\Dao\Account\AccountRoleDaoInterface;
-use App\Model\Entity\Rbac\AccountRoleEntity;
+use App\Model\Entity\Permission\AccountRoleEntity;
 use Swoft\Bean\Annotation\Mapping\Bean;
 use Swoft\Db\Eloquent\Collection;
 

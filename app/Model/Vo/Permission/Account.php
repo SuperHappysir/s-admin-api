@@ -2,6 +2,7 @@
 
 namespace App\Model\Vo\Permission;
 
+use App\Model\Entity\Permission\AccountEntity;
 use Happysir\Lib\Annotation\Mapping\POJO;
 use Happysir\Lib\BasePOJO;
 
@@ -59,5 +60,25 @@ class Account extends BasePOJO
     public function setExtra(array $extra) : void
     {
         $this->extra = $extra;
+    }
+    
+    /**
+     * @return \App\Model\Entity\Permission\AccountEntity
+     *
+     * @throws \Swoft\Db\Exception\DbException
+     */
+    public function convertTo() : AccountEntity
+    {
+        return AccountEntity::new($this->toArray());
+    }
+    
+    /**
+     * @param \App\Model\Entity\Permission\AccountEntity $accountEntity
+     * @return $this
+     * @throws \Swoft\Db\Exception\DbException
+     */
+    public static function convertFrom(AccountEntity $accountEntity) : self
+    {
+        return self::new($accountEntity->toArray());
     }
 }

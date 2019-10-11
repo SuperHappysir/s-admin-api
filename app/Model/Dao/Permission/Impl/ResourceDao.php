@@ -5,12 +5,14 @@ namespace App\Model\Dao\Permission\Impl;
 use App\Common\Enum\Permission\TypeEnum;
 use App\Exception\AlreadyExistsException;
 use App\Exception\InvalidParamException;
+use App\Exception\NotFoundException;
 use App\Model\Dao\AbstractDao;
-use App\Model\Dao\Permission\PermissionDaoInterface;
-use App\Model\Entity\Rbac\ApiFieldResourceEntity;
-use App\Model\Entity\Rbac\ApiResourceEntity;
-use App\Model\Entity\Rbac\FrontResourceEntity;
-use App\Model\Vo\Permission\BackEndApiField;
+use App\Model\Dao\Permission\ResourceDaoInterface;
+use App\Model\Entity\Permission\ApiFieldResourceEntity;
+use App\Model\Entity\Permission\ApiResourceEntity;
+use App\Model\Entity\Permission\FrontResourceEntity;
+use App\Model\Vo\Permission\BackEndApiFieldResource;
+use App\Model\Vo\Permission\FrontResource;
 use Happysir\Lib\Enum\BoolEnum;
 use Swoft\Bean\Annotation\Mapping\Bean;
 use Swoft\Db\Eloquent\Builder;
@@ -20,7 +22,7 @@ use Swoft\Db\Eloquent\Model;
 /**
  * @Bean()
  */
-class PermissionDao extends AbstractDao implements PermissionDaoInterface
+class ResourceDao extends AbstractDao implements ResourceDaoInterface
 {
     public function model() : string
     {
@@ -48,7 +50,7 @@ class PermissionDao extends AbstractDao implements PermissionDaoInterface
     
     /**
      * @param array $attr
-     * @return \App\Model\Entity\Rbac\ApiResourceEntity
+     * @return \App\Model\Entity\Permission\ApiResourceEntity
      * @throws \App\Exception\InvalidParamException
      * @throws \ReflectionException
      * @throws \Swoft\Bean\Exception\ContainerException
@@ -64,7 +66,7 @@ class PermissionDao extends AbstractDao implements PermissionDaoInterface
         $entity = ApiResourceEntity::firstOrNew(
             [
                 'request_method' => $attr['method'],
-                'uri'        => $attr['path']
+                'uri'            => $attr['path']
             ]
         );
         $entity->fill(
@@ -222,9 +224,9 @@ class PermissionDao extends AbstractDao implements PermissionDaoInterface
     }
     
     /**
-     * @param int                                      $apiPerId
-     * @param \App\Model\Vo\Permission\BackEndApiField $dto
-     * @return \App\Model\Entity\Rbac\ApiFieldResourceEntity
+     * @param int                                              $apiPerId
+     * @param \App\Model\Vo\Permission\BackEndApiFieldResource $dto
+     * @return \App\Model\Entity\Permission\ApiFieldResourceEntity
      * @throws \App\Exception\AlreadyExistsException
      * @throws \ReflectionException
      * @throws \Swoft\Bean\Exception\ContainerException
@@ -232,7 +234,7 @@ class PermissionDao extends AbstractDao implements PermissionDaoInterface
      */
     public function createBackEndApiField(
         int $apiPerId,
-        BackEndApiField $dto
+        BackEndApiFieldResource $dto
     ) : ApiFieldResourceEntity {
         /** @var ApiFieldResourceEntity $entity */
         $entity = ApiFieldResourceEntity::where('field_key', $dto->getFieldKey())
@@ -254,7 +256,32 @@ class PermissionDao extends AbstractDao implements PermissionDaoInterface
             }
         }
         
-        $entity = ApiFieldResourceEntity::new($dto->toArray());
+        $entity = $dto->convertTo();
+        $entity->save();
+        
+        return $entity;
+    }
+    
+    /**
+     * @param int                                              $resourceId
+     * @param \App\Model\Vo\Permission\BackEndApiFieldResource $dto
+     * @return \App\Model\Entity\Permission\ApiFieldResourceEntity
+     * @throws \App\Exception\NotFoundException
+     * @throws \ReflectionException
+     * @throws \Swoft\Bean\Exception\ContainerException
+     * @throws \Swoft\Db\Exception\DbException
+     */
+    public function updateBackEndApiField(
+        int $resourceId,
+        BackEndApiFieldResource $dto
+    ) : ApiFieldResourceEntity {
+        /** @var ApiFieldResourceEntity $entity */
+        $entity = ApiFieldResourceEntity::where('id', $resourceId)
+                                        ->first();
+        if (!$entity) {
+            throw new NotFoundException();
+        }
+        $entity->setFieldDesc($dto->getFieldDesc());
         $entity->save();
         
         return $entity;
@@ -278,6 +305,64 @@ class PermissionDao extends AbstractDao implements PermissionDaoInterface
                                      ->whereIn('api_per_id', $apiPerIds)
                                      ->where('is_deleted', BoolEnum::FALSE)
                                      ->get($columns);
+    }
+    
+    /**
+     * @param \App\Model\Vo\Permission\FrontResource $dto
+     * @return \App\Model\Entity\Permission\FrontResourceEntity
+     * @throws \ReflectionException
+     * @throws \Swoft\Bean\Exception\ContainerException
+     * @throws \Swoft\Db\Exception\DbException
+     */
+    public function createOrUpdateFrontEndResource(
+        FrontResource $dto
+    ) : FrontResourceEntity {
+        /** @var FrontResourceEntity $entity */
+        $entity = FrontResourceEntity::query()
+                                     ->firstOrNew(
+                                         [
+                                             'component_name' => $dto->getComponentName(),
+                                             'front_type'     => $dto->getFrontType(),
+                                         ]
+                                     );
+        
+        $entity->setFrontName($dto->getFrontName());
+        $entity->setIsDeleted(BoolEnum::FALSE);
+        !$entity->swoftExists && $entity->setExtra(json_encode($dto->getExtra()));
+        $entity->save();
+        
+        return $entity;
+    }
+    
+    /**
+     * 更新前端权限
+     *
+     * @param int                                    $resourceId
+     * @param \App\Model\Vo\Permission\FrontResource $dto
+     * @return \App\Model\Entity\Permission\FrontResourceEntity
+     * @throws \App\Exception\NotFoundException
+     * @throws \ReflectionException
+     * @throws \Swoft\Bean\Exception\ContainerException
+     * @throws \Swoft\Db\Exception\DbException
+     */
+    public function updateFrontEndResource(
+        int $resourceId,
+        FrontResource $dto
+    ) : FrontResourceEntity {
+        /** @var FrontResourceEntity $entity */
+        $entity = FrontResourceEntity::query()
+                                               ->find($resourceId);
+        
+        if (!$entity) {
+            throw new NotFoundException();
+        }
+        
+        $entity->setComponentName($dto->getComponentName());
+        $entity->setFrontName($dto->getFrontName());
+        $entity->setExtra(json_encode($dto->getExtra()));
+        $entity->save();
+        
+        return $entity;
     }
     
     /**

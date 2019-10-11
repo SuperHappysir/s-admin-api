@@ -2,14 +2,15 @@
 
 namespace App\Model\Vo\Permission;
 
+use App\Model\Entity\Permission\ApiFieldResourceEntity;
 use Happysir\Lib\Annotation\Mapping\POJO;
 use Happysir\Lib\BasePOJO;
 
 /**
- * Class BackEndApiField
+ * Class BackEndApiFieldResource
  * @POJO()
  */
-class BackEndApiField extends BasePOJO
+class BackEndApiFieldResource extends BasePOJO
 {
     /**
      * 权限ID
@@ -134,5 +135,24 @@ class BackEndApiField extends BasePOJO
     public function setResourceId(int $resourceId) : void
     {
         $this->resourceId = $resourceId;
+    }
+    
+    /**
+     * @return \App\Model\Entity\Permission\ApiFieldResourceEntity
+     * @throws \Swoft\Db\Exception\DbException
+     */
+    public function convertTo() : ApiFieldResourceEntity
+    {
+        return ApiFieldResourceEntity::new($this->toArray());
+    }
+    
+    /**
+     * @param \App\Model\Entity\Permission\ApiFieldResourceEntity $resourceEntity
+     * @return $this
+     * @throws \Swoft\Db\Exception\DbException
+     */
+    public static function convertFrom(ApiFieldResourceEntity $resourceEntity) : self
+    {
+        return self::new($resourceEntity->toArray());
     }
 }

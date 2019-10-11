@@ -6,10 +6,10 @@ use Happysir\Lib\Annotation\Mapping\POJO;
 use Happysir\Lib\BasePOJOCollection;
 
 /**
- * Class BackendRouteResource
+ * Class BackendApiResourceCollection
  * @POJO()
  */
-class BackendRouteResourceCollection extends BasePOJOCollection
+class BackendApiResourceCollection extends BasePOJOCollection
 {
-    protected $POJOClass = BackendRouteResource::class;
+    protected $POJOClass = BackendApiResource::class;
 }

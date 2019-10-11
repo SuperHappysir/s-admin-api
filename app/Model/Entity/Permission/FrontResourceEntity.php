@@ -1,60 +1,62 @@
-<?php declare(strict_types = 1);
+<?php declare(strict_types=1);
 
-namespace App\Model\Entity\Rbac;
+
+namespace App\Model\Entity\Permission;
 
 use Swoft\Db\Annotation\Mapping\Column;
 use Swoft\Db\Annotation\Mapping\Entity;
 use Swoft\Db\Annotation\Mapping\Id;
 use Swoft\Db\Eloquent\Model;
 
+
 /**
- * API路由权限表
- * Class ApiPermissionResource
+ * 前端权限控制表
+ * Class FrontPermissionResource
  *
  * @since 2.0
  *
- * @Entity(table="rbac_api_resource")
+ * @Entity(table="rbac_front_resource")
  */
-class ApiResourceEntity extends Model
+class FrontResourceEntity extends Model
 {
     /**
-     * API 权限ID
+     * 前端权限ID
      * @Id()
      * @Column(name="id", prop="id")
      *
      * @var int
      */
     private $id;
-    
+
     /**
-     * 接口名称
+     * 名称
      *
-     * @Column(name="api_name", prop="api_name")
+     * @Column(name="front_name", prop="front_name")
      *
      * @var string
      */
-    private $apiName;
-    
+    private $frontName;
+
     /**
-     * 请求名称  GET POST DELETE PUT
+     * 授权标志/路径
      *
-     * @Column(name="request_method", prop="request_method")
+     * @Column(name="component_name", prop="component_name")
      *
      * @var string
      */
-    private $requestMethod;
-    
+    private $componentName;
+
     /**
-     * 路径
+     * 0 ?? 1 ??
      *
-     * @Column(name="uri", prop="uri")
+     * @Column(name="front_type", prop="front_type")
      *
-     * @var string
+     * @var int
      */
-    private $uri;
-    
+    private $frontType;
+
     /**
-     * 扩展字段
+     * 导航 1 按钮
      *
      * @Column()
      *
@@ -88,149 +90,150 @@ class ApiResourceEntity extends Model
      * @var string
      */
     private $updatedAt;
-    
+
+
     /**
      * @param int $id
      *
      * @return void
      */
-    public function setId(int $id) : void
+    public function setId(int $id): void
     {
         $this->id = $id;
     }
-    
+
     /**
-     * @param string $apiName
+     * @param string $frontName
      *
      * @return void
      */
-    public function setApiName(string $apiName) : void
+    public function setFrontName(string $frontName): void
     {
-        $this->apiName = $apiName;
+        $this->frontName = $frontName;
     }
-    
+
     /**
-     * @param string $requestMethod
+     * @param string $componentName
      *
      * @return void
      */
-    public function setRequestMethod(string $requestMethod) : void
+    public function setComponentName(string $componentName): void
     {
-        $this->requestMethod = $requestMethod;
+        $this->componentName = $componentName;
     }
-    
+
     /**
-     * @param string $uri
+     * @param int $frontType
      *
      * @return void
      */
-    public function setUri(string $uri) : void
+    public function setFrontType(int $frontType): void
     {
-        $this->uri = $uri;
+        $this->frontType = $frontType;
     }
-    
+
     /**
      * @param string $extra
      *
      * @return void
      */
-    public function setExtra(string $extra) : void
+    public function setExtra(string $extra): void
     {
         $this->extra = $extra;
     }
-    
+
     /**
      * @param int $isDeleted
      *
      * @return void
      */
-    public function setIsDeleted(int $isDeleted) : void
+    public function setIsDeleted(int $isDeleted): void
     {
         $this->isDeleted = $isDeleted;
     }
-    
+
     /**
      * @param string $createdAt
      *
      * @return void
      */
-    public function setCreatedAt(string $createdAt) : void
+    public function setCreatedAt(string $createdAt): void
     {
         $this->createdAt = $createdAt;
     }
-    
+
     /**
      * @param string $updatedAt
      *
      * @return void
      */
-    public function setUpdatedAt(string $updatedAt) : void
+    public function setUpdatedAt(string $updatedAt): void
     {
         $this->updatedAt = $updatedAt;
     }
-    
+
     /**
      * @return int
      */
-    public function getId() : ?int
+    public function getId(): ?int
     {
         return $this->id;
     }
-    
+
     /**
      * @return string
      */
-    public function getApiName() : ?string
+    public function getFrontName(): ?string
     {
-        return $this->apiName;
+        return $this->frontName;
     }
-    
+
     /**
      * @return string
      */
-    public function getRequestMethod() : ?string
+    public function getComponentName(): ?string
     {
-        return $this->requestMethod;
+        return $this->componentName;
     }
-    
-    /**
-     * @return string
-     */
-    public function getUri() : ?string
-    {
-        return $this->uri;
-    }
-    
-    /**
-     * @return string
-     */
-    public function getExtra() : ?string
-    {
-        return $this->extra;
-    }
-    
+
     /**
      * @return int
      */
-    public function getIsDeleted() : ?int
+    public function getFrontType(): ?int
+    {
+        return $this->frontType;
+    }
+
+    /**
+     * @return string
+     */
+    public function getExtra(): ?string
+    {
+        return $this->extra;
+    }
+
+    /**
+     * @return int
+     */
+    public function getIsDeleted(): ?int
     {
         return $this->isDeleted;
     }
-    
+
     /**
      * @return string
      */
-    public function getCreatedAt() : ?string
+    public function getCreatedAt(): ?string
     {
         return $this->createdAt;
     }
-    
+
     /**
      * @return string
      */
-    public function getUpdatedAt() : ?string
+    public function getUpdatedAt(): ?string
     {
         return $this->updatedAt;
     }
-    
+
 }

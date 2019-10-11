@@ -2,16 +2,16 @@
 
 namespace App\Model\Vo\Permission;
 
-use App\Model\Entity\Rbac\ApiResourceEntity;
+use App\Model\Entity\Permission\ApiResourceEntity;
 use Happysir\Lib\Annotation\Mapping\Filed;
 use Happysir\Lib\Annotation\Mapping\POJO;
 use Happysir\Lib\BasePOJO;
 
 /**
- * Class BackendRouteResource
+ * Class BackendApiResource
  * @POJO()
  */
-class BackendRouteResource extends BasePOJO
+class BackendApiResource extends BasePOJO
 {
     /**
      * 权限ID
@@ -118,7 +118,7 @@ class BackendRouteResource extends BasePOJO
     }
     
     /**
-     * @return \App\Model\Entity\Rbac\ApiResourceEntity
+     * @return \App\Model\Entity\Permission\ApiResourceEntity
      * @throws \Swoft\Db\Exception\DbException
      */
     public function convertToApiPermissionResourceEntity() : ApiResourceEntity
@@ -127,7 +127,7 @@ class BackendRouteResource extends BasePOJO
     }
     
     /**
-     * @param \App\Model\Entity\Rbac\ApiResourceEntity $resourceEntity
+     * @param \App\Model\Entity\Permission\ApiResourceEntity $resourceEntity
      * @return $this
      * @throws \Swoft\Db\Exception\DbException
      */

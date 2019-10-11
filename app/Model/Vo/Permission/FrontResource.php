@@ -2,6 +2,7 @@
 
 namespace App\Model\Vo\Permission;
 
+use App\Model\Entity\Permission\FrontResourceEntity;
 use Happysir\Lib\Annotation\Mapping\POJO;
 use Happysir\Lib\BasePOJO;
 
@@ -134,5 +135,24 @@ class FrontResource extends BasePOJO
     public function setExtra(array $extra) : void
     {
         $this->extra = $extra;
+    }
+    
+    /**
+     * @return \App\Model\Entity\Permission\FrontResourceEntity
+     * @throws \Swoft\Db\Exception\DbException
+     */
+    public function convertTo() : FrontResourceEntity
+    {
+        return FrontResourceEntity::new($this->toArray());
+    }
+    
+    /**
+     * @param \App\Model\Entity\Permission\FrontResourceEntity $resourceEntity
+     * @return $this
+     * @throws \Swoft\Db\Exception\DbException
+     */
+    public static function convertFrom(FrontResourceEntity $resourceEntity) : self
+    {
+        return self::new($resourceEntity->toArray());
     }
 }

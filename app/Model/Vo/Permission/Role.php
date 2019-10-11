@@ -2,6 +2,7 @@
 
 namespace App\Model\Vo\Permission;
 
+use App\Model\Entity\Permission\RoleEntity;
 use Happysir\Lib\Annotation\Mapping\POJO;
 use Happysir\Lib\BasePOJO;
 
@@ -59,5 +60,24 @@ class Role extends BasePOJO
     public function setDescribe(string $describe) : void
     {
         $this->describe = $describe;
+    }
+    
+    /**
+     * @return \App\Model\Entity\Permission\RoleEntity
+     * @throws \Swoft\Db\Exception\DbException
+     */
+    public function convertTo() : RoleEntity
+    {
+        return RoleEntity::new($this->toArray());
+    }
+    
+    /**
+     * @param \App\Model\Entity\Permission\RoleEntity $resourceEntity
+     * @return $this
+     * @throws \Swoft\Db\Exception\DbException
+     */
+    public static function convertFrom(RoleEntity $resourceEntity) : self
+    {
+        return self::new($resourceEntity->toArray());
     }
 }
